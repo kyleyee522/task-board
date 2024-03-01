@@ -4,9 +4,8 @@ let nextId = JSON.parse(localStorage.getItem('nextId'));
 const taskNameInputEl = $('#task-name');
 const taskDescInputEl = $('#task-description');
 const taskDateInputEl = $('#task-date');
-// const addTaskBtn = $('#add-task-button');
-// const taskModalForm = $('#task-modal-form');
 const taskModalForm = $('#the-form');
+const body = $('body');
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
@@ -40,7 +39,7 @@ function createTaskCard(task) {
 
 	// Create a new button element and add the classes `btn`, `btn-danger`, and `delete`. Also set the text of the button to "Delete" and add a `data-project-id` attribute and set it to the project id.
 	const cardDeleteBtn = $('<button>');
-	cardDeleteBtn.addClass('btn btn-danger delete');
+	cardDeleteBtn.addClass('btn btn-danger delete btn-delete-project');
 	cardDeleteBtn.text('Delete');
 	cardDeleteBtn.attr('data-project-id', task.id);
 
@@ -68,6 +67,11 @@ function createTaskCard(task) {
 function renderTaskList() {
 	let tasks = JSON.parse(localStorage.getItem('tasks'));
 
+	console.log(tasks);
+
+	if (tasks === null) {
+		tasks = [];
+	}
 	// ? Empty existing project cards out of the lanes
 	const todoList = $('#todo-cards');
 	todoList.empty();
@@ -79,7 +83,7 @@ function renderTaskList() {
 	doneList.empty();
 
 	for (task of tasks) {
-		console.log(task);
+		// console.log(task);
 		const taskCard = createTaskCard(task);
 		if (task.status === 'to-do') {
 			todoList.append(taskCard);
@@ -145,12 +149,33 @@ function handleAddTask(event) {
 }
 
 // Todo: create a function to handle deleting a task
-function handleDeleteTask(event) {}
+function handleDeleteTask(event) {
+	const taskId = $(event.target).attr('data-project-id');
+	const tasks = JSON.parse(localStorage.getItem('tasks'));
+
+	// if (tasks === null) {
+	// 	tasks = [];
+	// }
+	console.log(taskId);
+	for (task of tasks) {
+		if (taskId === task.id) {
+			tasks.splice(task, 1);
+		}
+	}
+
+	localStorage.setItem('tasks', JSON.stringify(tasks));
+
+	renderTaskList();
+}
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
 	// ? Read projects from localStorage
 	let tasks = JSON.parse(localStorage.getItem('tasks'));
+
+	if (tasks === null) {
+		tasks = [];
+	}
 
 	// ? Get the project id from the event
 	const taskId = ui.draggable[0].dataset.projectId;
@@ -175,6 +200,8 @@ $(document).ready(function () {
 	renderTaskList();
 
 	taskModalForm.on('submit', handleAddTask);
+
+	body.on('click', '.btn-delete-project', handleDeleteTask);
 
 	$('#task-date').datepicker({
 		changeMonth: true,
