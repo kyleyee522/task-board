@@ -67,7 +67,7 @@ function createTaskCard(task) {
 function renderTaskList() {
 	let tasks = JSON.parse(localStorage.getItem('tasks'));
 
-	console.log(tasks);
+	// console.log(tasks);
 
 	if (tasks === null) {
 		tasks = [];
@@ -156,7 +156,7 @@ function handleDeleteTask(event) {
 	// if (tasks === null) {
 	// 	tasks = [];
 	// }
-	console.log(taskId);
+	// console.log(taskId);
 	for (task of tasks) {
 		if (taskId === task.id) {
 			tasks.splice(task, 1);
