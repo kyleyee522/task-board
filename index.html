@@ -38,6 +38,7 @@
 					class="btn btn-success"
 					data-bs-toggle="modal"
 					data-bs-target="#formModal"
+					id="add-task-button"
 				>
 					<!-- data-toggle="modal"
 					data-target="#exampleModal" -->
@@ -61,7 +62,7 @@
 				aria-labelledby="exampleModalLabel"
 				aria-hidden="true"
 			>
-				<div class="modal-dialog">
+				<div class="modal-dialog" id="task-modal-form">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h1 class="modal-title fs-5" id="exampleModalLabel">
@@ -75,7 +76,7 @@
 							></button>
 						</div>
 						<div class="modal-body">
-							<form>
+							<form id="the-form">
 								<div class="mb-3 d-flex justify-content-between">
 									<div>
 										<label for="task-name" class="col-form-label">Task</label>
@@ -83,18 +84,42 @@
 									</div>
 									<div>
 										<label for="task-date" class="col-form-label">Date</label>
-										<input type="text" class="form-control" id="task-date" />
+										<input
+											placeholder="Task Due Date"
+											autocomplete="off"
+											type="text"
+											class="form-control"
+											id="task-date"
+										/>
 									</div>
 								</div>
 								<div class="mb-3">
-									<label for="message-text" class="col-form-label"
-										>Message</label
+									<label for="task-description" class="col-form-label"
+										>Task Description</label
 									>
-									<textarea class="form-control" id="message-text"></textarea>
+									<textarea
+										class="form-control"
+										id="task-description"
+									></textarea>
 								</div>
+								<button
+									type="button"
+									class="btn btn-secondary"
+									data-bs-dismiss="modal"
+								>
+									Close
+								</button>
+								<button
+									id="the-submit"
+									type="submit"
+									class="btn btn-primary"
+									data-bs-dismiss="modal"
+								>
+									Send message
+								</button>
 							</form>
 						</div>
-						<div class="modal-footer">
+						<!-- <div class="modal-footer">
 							<button
 								type="button"
 								class="btn btn-secondary"
@@ -102,10 +127,10 @@
 							>
 								Close
 							</button>
-							<button type="button" class="btn btn-primary">
+							<button id="the-submit" type="submit" class="btn btn-primary">
 								Send message
 							</button>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
